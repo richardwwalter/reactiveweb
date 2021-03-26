@@ -1,4 +1,5 @@
 [![Java CI with Maven](https://github.com/richardwwalter/reactiveweb/actions/workflows/maven.yml/badge.svg)](https://github.com/richardwwalter/reactiveweb/actions/workflows/maven.yml)
+![Coverage](https://raw.githubusercontent.com/richardwwalter/reactiveweb/master/.github/badges/jacoco.svg)
 
 ## Reactive Web Demo
 
