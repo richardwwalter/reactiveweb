@@ -18,6 +18,7 @@ import reactor.core.publisher.Flux;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.times;
 
 @RunWith(SpringRunner.class)
 @WebFluxTest
@@ -54,6 +55,8 @@ public class CategoryHttpTest {
                     assertThat(catsRead.size()).isEqualTo(1L);
                     //assertThat(catsRead.size()).is( new Condition<>(c -> c>1, "largerThan1"));
                 });
+
+        Mockito.verify(repository, times(1)).findAll();
 
     }
 
