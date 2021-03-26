@@ -40,7 +40,7 @@ public class AnnotationCategoryController {
         return categoryMono.flatMap(this.categoryRepository::save);
     }
 
-    @PutMapping("{productId}")
+    @PutMapping("{categoryId}")
     public Mono<Category> updateCategory(@PathVariable int categoryId, @RequestBody @Valid Mono<Category> categoryMono){
         return service.updateCategory(categoryId, categoryMono);
     }

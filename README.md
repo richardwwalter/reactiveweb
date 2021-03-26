@@ -5,3 +5,5 @@
 ### Uses WebFlux and Functional syles for rest
 ### Uses Reactive Repo
 ### Uses r2dbc-postgresql
+
+Ref Josh Long - Bootiful TDD

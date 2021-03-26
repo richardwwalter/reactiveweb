@@ -13,19 +13,19 @@ public class CategoryService {
 
     private final CategoryRepository categoryRepository;
 
-    //@Transactional
+    @Transactional
     public Mono<Category> save(Category category){
         return categoryRepository.save(category);
     }
 
     @Transactional
     public Mono<Category> updateCategory(int categoryId, final Mono<Category> categoryMono){
-        return this.categoryRepository.findById(categoryId)
+        return categoryRepository.findById(categoryId)
                 .flatMap(c -> categoryMono.map(u -> {
                     c.setName(u.getName());
                     return c;
                 }))
-                .flatMap(p -> this.categoryRepository.save(p));
+                .flatMap(categoryRepository::save);
     }
 
 }
