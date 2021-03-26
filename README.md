@@ -7,3 +7,8 @@
 ### Uses r2dbc-postgresql
 
 Ref Josh Long - Bootiful TDD
+
+### Open API Docs
+http://localhost:9090/v3/api-docs
+### Swagger UI
+http://localhost:9090/webjars/swagger-ui/index.html
