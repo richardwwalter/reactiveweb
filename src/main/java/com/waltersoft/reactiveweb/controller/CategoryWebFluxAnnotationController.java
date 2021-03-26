@@ -20,7 +20,7 @@ import javax.validation.Valid;
 @Validated
 @Slf4j
 @RequestMapping("acategory")
-public class AnnotationCategoryController {
+public class CategoryWebFluxAnnotationController {
 
     private final CategoryService service;
     private final CategoryRepository categoryRepository;

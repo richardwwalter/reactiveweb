@@ -15,7 +15,7 @@ import static org.springdoc.core.fn.builders.apiresponse.Builder.responseBuilder
 @Configuration
 @RequiredArgsConstructor
 @Slf4j
-public class CategoryRouter {
+public class CategoryWebFluxFunctionalRouter {
 
     private final CategoryRepository categoryRepository;
 /*
