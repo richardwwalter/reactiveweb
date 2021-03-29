@@ -22,35 +22,35 @@ import javax.validation.Valid;
 @RequestMapping("acategory")
 public class CategoryWebFluxAnnotationController {
 
-    private final CategoryService service;
-    private final CategoryRepository categoryRepository;
+  private final CategoryService service;
+  private final CategoryRepository categoryRepository;
 
-    @GetMapping(path="all", produces ="application/json")
-    public Flux<Category> getAll(){
-        return this.categoryRepository.findAll();
-    }
+  @GetMapping(path = "all", produces = "application/json")
+  public Flux<Category> getAll() {
+    return this.categoryRepository.findAll();
+  }
 
-    @GetMapping(path="{categoryId}", produces ="application/json")
-    public Mono<ResponseEntity<Category>> getCategoryById(@PathVariable int categoryId){
-        return this.categoryRepository.findById(categoryId)
-                .map(ResponseEntity::ok)
-                .defaultIfEmpty(ResponseEntity.notFound().build());
-    }
+  @GetMapping(path = "{categoryId}", produces = "application/json")
+  public Mono<ResponseEntity<Category>> getCategoryById(@PathVariable int categoryId) {
+    return this.categoryRepository
+        .findById(categoryId)
+        .map(ResponseEntity::ok)
+        .defaultIfEmpty(ResponseEntity.notFound().build());
+  }
 
-    @PostMapping(consumes ="application/json", produces ="application/json")
-    public Mono<Category> createCategory(@RequestBody @Valid Mono<Category> categoryMono){
-        return categoryMono.flatMap(this.categoryRepository::save);
-    }
+  @PostMapping(consumes = "application/json", produces = "application/json")
+  public Mono<Category> createCategory(@RequestBody @Valid Mono<Category> categoryMono) {
+    return categoryMono.flatMap(this.categoryRepository::save);
+  }
 
-    @PutMapping(path="{categoryId}",consumes ="application/json", produces ="application/json")
-    public Mono<Category> updateCategory(@PathVariable int categoryId, @RequestBody @Valid Mono<Category> categoryMono){
-        return service.updateCategory(categoryId, categoryMono);
-    }
+  @PutMapping(path = "{categoryId}", consumes = "application/json", produces = "application/json")
+  public Mono<Category> updateCategory(
+      @PathVariable int categoryId, @RequestBody @Valid Mono<Category> categoryMono) {
+    return service.updateCategory(categoryId, categoryMono);
+  }
 
-    @DeleteMapping(path="/{id}", produces ="application/json")
-    public Mono<Void> deleteCategory(@PathVariable int id){
-        return this.categoryRepository.deleteById(id);
-    }
-
+  @DeleteMapping(path = "/{id}", produces = "application/json")
+  public Mono<Void> deleteCategory(@PathVariable int id) {
+    return this.categoryRepository.deleteById(id);
+  }
 }
-

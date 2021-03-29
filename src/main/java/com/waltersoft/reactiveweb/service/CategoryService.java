@@ -11,21 +11,24 @@ import reactor.core.publisher.Mono;
 @RequiredArgsConstructor
 public class CategoryService {
 
-    private final CategoryRepository categoryRepository;
+  private final CategoryRepository categoryRepository;
 
-    @Transactional
-    public Mono<Category> save(Category category){
-        return categoryRepository.save(category);
-    }
+  @Transactional
+  public Mono<Category> save(Category category) {
+    return categoryRepository.save(category);
+  }
 
-    @Transactional
-    public Mono<Category> updateCategory(int categoryId, final Mono<Category> categoryMono){
-        return categoryRepository.findById(categoryId)
-                .flatMap(c -> categoryMono.map(u -> {
-                    c.setName(u.getName());
-                    return c;
-                }))
-                .flatMap(categoryRepository::save);
-    }
-
+  @Transactional
+  public Mono<Category> updateCategory(int categoryId, final Mono<Category> categoryMono) {
+    return categoryRepository
+        .findById(categoryId)
+        .flatMap(
+            c ->
+                categoryMono.map(
+                    u -> {
+                      c.setName(u.getName());
+                      return c;
+                    }))
+        .flatMap(categoryRepository::save);
+  }
 }

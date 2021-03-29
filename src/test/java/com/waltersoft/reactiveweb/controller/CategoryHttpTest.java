@@ -25,39 +25,37 @@ import static org.mockito.Mockito.times;
 @Testcontainers
 public class CategoryHttpTest {
 
-    @MockBean
-    CategoryRepository repository;
+  @MockBean CategoryRepository repository;
 
-    @MockBean
-    CategoryService service;
+  @MockBean CategoryService service;
 
-    @Autowired
-    private WebTestClient client;
+  @Autowired private WebTestClient client;
 
-    @Test
-    public void getAllCategories(){
+  @Test
+  public void getAllCategories() {
 
-        Mockito.when(this.repository.findAll())
-                .thenReturn(Flux.just(new Category().setName("Fred")));
+    Mockito.when(this.repository.findAll()).thenReturn(Flux.just(new Category().setName("Fred")));
 
-        client.get()
-                .uri("/acategory/all")
-                .accept(MediaType.APPLICATION_JSON)
-                .exchange()
-                .expectStatus().isOk()
-                .expectHeader().contentType(MediaType.APPLICATION_JSON)
-                .expectBodyList(Category.class)
-                .consumeWith(response ->{
-                    assertThat(response.getResponseBody()).isNotNull();
-                    List<Category> catsRead = response.getResponseBody();
-                    assertThat(catsRead).isNotNull();
-                    assertThat(catsRead).isNotEmpty();
-                    assertThat(catsRead.size()).isEqualTo(1L);
-                    //assertThat(catsRead.size()).is( new Condition<>(c -> c>1, "largerThan1"));
-                });
+    client
+        .get()
+        .uri("/acategory/all")
+        .accept(MediaType.APPLICATION_JSON)
+        .exchange()
+        .expectStatus()
+        .isOk()
+        .expectHeader()
+        .contentType(MediaType.APPLICATION_JSON)
+        .expectBodyList(Category.class)
+        .consumeWith(
+            response -> {
+              assertThat(response.getResponseBody()).isNotNull();
+              List<Category> catsRead = response.getResponseBody();
+              assertThat(catsRead).isNotNull();
+              assertThat(catsRead).isNotEmpty();
+              assertThat(catsRead.size()).isEqualTo(1L);
+              // assertThat(catsRead.size()).is( new Condition<>(c -> c>1, "largerThan1"));
+            });
 
-        Mockito.verify(repository, times(1)).findAll();
-
-    }
-
+    Mockito.verify(repository, times(1)).findAll();
+  }
 }

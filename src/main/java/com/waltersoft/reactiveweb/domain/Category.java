@@ -19,26 +19,23 @@ import javax.validation.constraints.NotNull;
 @Table("vehicles.categories")
 public class Category implements Persistable<Integer> {
 
-    @Id
-    private Integer id;
+  @Id private Integer id;
 
-    //@Transient
-    //private boolean newCategory;
+  // @Transient
+  // private boolean newCategory;
 
-    @NotNull
-    @NotBlank
-    private String name;
+  @NotNull @NotBlank private String name;
 
-    @Override
-    @Transient
-    @JsonIgnore
-    public boolean isNew() {
-        //    return this.newCategory || id == null;
-        return id == null;
-    }
+  @Override
+  @Transient
+  @JsonIgnore
+  public boolean isNew() {
+    //    return this.newCategory || id == null;
+    return id == null;
+  }
 
-    //public Category setAsNew(){
-    //    this.newCategory = true;
-    //    return this;
-    //}
+  // public Category setAsNew(){
+  //    this.newCategory = true;
+  //    return this;
+  // }
 }

@@ -17,21 +17,20 @@ import reactor.core.publisher.Mono;
 @Slf4j
 public class ReactivewebApplication {
 
-	private final CategoryService service;
+  private final CategoryService service;
 
-	public static void main(String[] args) {
-		SpringApplication.run(ReactivewebApplication.class, args);
-	}
+  public static void main(String[] args) {
+    SpringApplication.run(ReactivewebApplication.class, args);
+  }
 
-	@EventListener(ApplicationReadyEvent.class)
-	public void initiatePushDataFlow() {
-		save();
-	}
+  @EventListener(ApplicationReadyEvent.class)
+  public void initiatePushDataFlow() {
+    save();
+  }
 
-	private void save(){
-		Category newCategory = Category.builder().name("SpaceShip").build();
-		Mono<Category> savedCat =  service.save(newCategory);
-		savedCat.subscribe(c->log.info("Saved {}",c));
-	}
-
+  private void save() {
+    Category newCategory = Category.builder().name("SpaceShip").build();
+    Mono<Category> savedCat = service.save(newCategory);
+    savedCat.subscribe(c -> log.info("Saved {}", c));
+  }
 }

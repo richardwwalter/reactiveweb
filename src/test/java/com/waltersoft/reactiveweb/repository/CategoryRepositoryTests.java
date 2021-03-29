@@ -15,22 +15,18 @@ import reactor.test.StepVerifier;
 @Testcontainers
 public class CategoryRepositoryTests {
 
-    @Autowired
-    private CategoryRepository repository;
+  @Autowired private CategoryRepository repository;
 
-    @Test
-    public void persistTest(){
-        Category cat = new Category().setName("Fred");
+  @Test
+  public void persistTest() {
+    Category cat = new Category().setName("Fred");
 
+    Flux<Category> catFlux =
+        repository
+            .deleteAll() // delete all
+            .then(repository.save(cat)) // save
+            .thenMany(repository.findAll()); // find
 
-        Flux<Category> catFlux = repository.deleteAll()  // delete all
-                .then( repository.save(cat) )            // save
-                .thenMany( repository.findAll() );       // find
-
-        StepVerifier
-                .create(catFlux)
-                .expectNextCount(1)
-                .verifyComplete();
-    }
-
+    StepVerifier.create(catFlux).expectNextCount(1).verifyComplete();
+  }
 }

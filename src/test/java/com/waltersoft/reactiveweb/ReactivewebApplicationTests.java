@@ -20,51 +20,58 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @ContextConfiguration
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = ReactivewebApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest(
+    classes = ReactivewebApplication.class,
+    webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Testcontainers
 @RequiredArgsConstructor
 @Slf4j
 class ReactivewebApplicationTests {
 
-	@Autowired
-	private WebTestClient webTestClient;
+  @Autowired private WebTestClient webTestClient;
 
-	@Test
-	public void getCategoriesTest(){
-		webTestClient.get()
-				.uri("/category")
-				.accept(MediaType.APPLICATION_JSON)
-				.exchange()
-				.expectStatus().isOk()
-				.expectHeader().contentType(MediaType.APPLICATION_JSON)
-				.expectBodyList(Category.class)
-				.consumeWith(response ->{
-					assertThat(response.getResponseBody()).isNotNull();
-					List<Category> catsRead = response.getResponseBody();
-					assertThat(catsRead).isNotNull();
-					assertThat(catsRead).isNotEmpty();
-					assertThat(catsRead.size()).isEqualTo(1L);
-				});
+  @Test
+  public void getCategoriesTest() {
+    webTestClient
+        .get()
+        .uri("/category")
+        .accept(MediaType.APPLICATION_JSON)
+        .exchange()
+        .expectStatus()
+        .isOk()
+        .expectHeader()
+        .contentType(MediaType.APPLICATION_JSON)
+        .expectBodyList(Category.class)
+        .consumeWith(
+            response -> {
+              assertThat(response.getResponseBody()).isNotNull();
+              List<Category> catsRead = response.getResponseBody();
+              assertThat(catsRead).isNotNull();
+              assertThat(catsRead).isNotEmpty();
+              assertThat(catsRead.size()).isEqualTo(1L);
+            });
+  }
 
-	}
-
-	@Test
-	public void getAllCategoriesTest(){
-		webTestClient.get()
-				.uri("/acategory/all")
-				.accept(MediaType.APPLICATION_JSON)
-				.exchange()
-				.expectStatus().isOk()
-				.expectHeader().contentType(MediaType.APPLICATION_JSON)
-				.expectBodyList(Category.class)
-				.consumeWith(response ->{
-					assertThat(response.getResponseBody()).isNotNull();
-					List<Category> catsRead = response.getResponseBody();
-					assertThat(catsRead).isNotNull();
-					assertThat(catsRead).isNotEmpty();
-					assertThat(catsRead.size()).isEqualTo(5L);
-					assertThat(catsRead.size()).is( new Condition<>(c -> c>1, "largerThan1"));
-				});
-	}
-
+  @Test
+  public void getAllCategoriesTest() {
+    webTestClient
+        .get()
+        .uri("/acategory/all")
+        .accept(MediaType.APPLICATION_JSON)
+        .exchange()
+        .expectStatus()
+        .isOk()
+        .expectHeader()
+        .contentType(MediaType.APPLICATION_JSON)
+        .expectBodyList(Category.class)
+        .consumeWith(
+            response -> {
+              assertThat(response.getResponseBody()).isNotNull();
+              List<Category> catsRead = response.getResponseBody();
+              assertThat(catsRead).isNotNull();
+              assertThat(catsRead).isNotEmpty();
+              assertThat(catsRead.size()).isEqualTo(5L);
+              assertThat(catsRead.size()).is(new Condition<>(c -> c > 1, "largerThan1"));
+            });
+  }
 }
